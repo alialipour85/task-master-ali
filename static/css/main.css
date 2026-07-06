@@ -1,4 +1,5 @@
 /* ===== 🌌 Reset & Base ===== */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,10 +7,17 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 /* ===== 🧊 Apple Liquid Glass Background ===== */
+
 body {
     background: #000207; /* مشکی عمیق و خالص اپل */
     min-height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,6 +37,7 @@ body::before, body::after {
     mix-blend-mode: screen;
     opacity: 0.45;
     z-index: 0;
+    pointer-events: none;
 }
 
 /* مایع نئونی اول (آبی-بنفش) */
@@ -48,32 +57,34 @@ body::after {
 }
 
 /* ===== 📱 Main Liquid Container ===== */
+
 .content {
     width: 100%;
     max-width: 850px;
     position: relative;
     z-index: 10;
-    
+
     /* متریال شیشه مایع اپل */
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(30px) saturate(200%);
     -webkit-backdrop-filter: blur(30px) saturate(200%);
-    
+
     /* لبه‌های شیشه‌ای براق */
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-top: 1px solid rgba(255, 255, 255, 0.25); /* هایلایت نوری از بالا */
     border-radius: 28px;
     padding: 48px 40px;
-    
-    box-shadow: 
+
+    box-shadow:
         0 4px 30px rgba(0, 0, 0, 0.4),
         0 40px 80px rgba(0, 0, 0, 0.7),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    
+
     animation: containerIntro 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ===== 🔤 Title ===== */
+
 h1 {
     text-align: center;
     margin-bottom: 36px;
@@ -85,6 +96,7 @@ h1 {
 }
 
 /* ===== 📊 Table ===== */
+
 table {
     width: 100%;
     border-spacing: 0;
@@ -126,6 +138,7 @@ tr:hover {
 }
 
 /* ===== 🔗 Pure Text Action Buttons (Update / Delete) ===== */
+
 td a {
     text-decoration: none;
     font-weight: 500;
@@ -136,7 +149,7 @@ td a {
     align-items: center;
     justify-content: center;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    
+
     /* حالت اولیه: بدون کادر و بک‌گراند - کاملاً مینی‌مال */
     color: rgba(255, 255, 255, 0.6);
     background: transparent;
@@ -171,6 +184,7 @@ td a:active {
 }
 
 /* ===== 📋 Form & Inputs ===== */
+
 form {
     display: flex;
     gap: 12px;
@@ -179,6 +193,7 @@ form {
 
 input[type="text"] {
     flex: 1;
+    min-width: 0; /* جلوگیری از سرریز فلکس در موبایل */
     padding: 16px 20px;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -196,6 +211,7 @@ input[type="text"]:focus {
 }
 
 /* ===== ⚡ Apple Liquid Glass Add Button ===== */
+
 input[type="submit"] {
     padding: 16px 32px;
     border-radius: 14px;
@@ -204,20 +220,20 @@ input[type="submit"] {
     font-size: 15px;
     letter-spacing: -0.01em;
     color: #ffffff;
-    
+
     /* افکت شیشه مایع سرمه‌ای/آبی اپل */
     background: linear-gradient(135deg, rgba(0, 122, 255, 0.4), rgba(10, 132, 255, 0.2));
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    
+
     /* لبه‌های نوری شیشه دکمه */
     border: 1px solid rgba(10, 132, 255, 0.3);
     border-top: 1px solid rgba(255, 255, 255, 0.3);
-    
-    box-shadow: 
+
+    box-shadow:
         0 4px 15px rgba(0, 122, 255, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        
+
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -225,7 +241,7 @@ input[type="submit"]:hover {
     background: linear-gradient(135deg, rgba(0, 122, 255, 0.55), rgba(10, 132, 255, 0.35));
     border-color: rgba(10, 132, 255, 0.5);
     border-top-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 
+    box-shadow:
         0 8px 25px rgba(0, 122, 255, 0.35),
         0 0 0 4px rgba(10, 132, 255, 0.1);
     transform: translateY(-2px);
@@ -236,23 +252,42 @@ input[type="submit"]:active {
 }
 
 /* ===== 📱 Responsive Mobile Cards (No Scroll) ===== */
+
 @media (max-width: 650px) {
     body {
         padding: 16px;
+        align-items: flex-start;
+    }
+
+    /* دایره‌های نئونی رو کوچیک‌تر می‌کنیم که باعث اسکرول افقی نشن */
+    body::before, body::after {
+        width: 260px;
+        height: 260px;
+        filter: blur(50px);
+        opacity: 0.35;
     }
 
     .content {
-        padding: 32px 20px;
+        width: 100%;
+        padding: 28px 18px;
         border-radius: 24px;
     }
 
     h1 {
-        font-size: 28px;
+        font-size: 24px;
+        margin-bottom: 24px;
+        word-break: break-word;
     }
 
     form {
         flex-direction: column;
         gap: 12px;
+        margin-top: 24px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        font-size: 16px; /* جلوگیری از زوم خودکار سافاری روی فوکوس اینپوت */
     }
 
     input[type="submit"] {
@@ -261,6 +296,7 @@ input[type="submit"]:active {
 
     table, thead, tbody, th, td, tr {
         display: block;
+        width: 100%;
     }
 
     thead tr {
@@ -284,12 +320,14 @@ input[type="submit"]:active {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 12px;
     }
 
     td::before {
         content: attr(data-label);
         font-weight: 500;
         color: #71717a;
+        flex-shrink: 0;
     }
 
     td:last-child {
@@ -301,7 +339,26 @@ input[type="submit"]:active {
     }
 }
 
+/* موبایل‌های خیلی کوچیک (کمتر از ۴۰۰px) */
+@media (max-width: 400px) {
+    .content {
+        padding: 24px 14px;
+        border-radius: 20px;
+    }
+
+    h1 {
+        font-size: 21px;
+    }
+
+    body::before, body::after {
+        width: 180px;
+        height: 180px;
+        filter: blur(40px);
+    }
+}
+
 /* ===== 🎭 Animations ===== */
+
 @keyframes containerIntro {
     from { opacity: 0; transform: scale(0.96); filter: blur(10px); }
     to { opacity: 1; transform: scale(1); filter: blur(0); }
