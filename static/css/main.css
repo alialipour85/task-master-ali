@@ -294,15 +294,23 @@ input[type="submit"]:active {
         width: 100%;
     }
 
-    table, thead, tbody, th, td, tr {
+    table, tbody, th, td, tr {
         display: block;
         width: 100%;
     }
 
-    thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
+    /* مخفی کردن کامل ردیف هدر (Task / Added / Actions)
+       چند روش هم‌زمان استفاده شده چون معلوم نیست هدر
+       داخل <thead> است یا یک <tr> عادی داخل <tbody> */
+    thead {
+        display: none !important;
+    }
+
+    /* اگر مرورگر :has را پشتیبانی کند (اکثر مرورگرهای امروزی)،
+       هر ردیفی که سلول‌هایش th باشد هم مخفی می‌شود،
+       حتی اگر داخل thead نباشد */
+    tr:has(th) {
+        display: none !important;
     }
 
     tr {
@@ -313,16 +321,22 @@ input[type="submit"]:active {
         margin-bottom: 12px;
     }
 
+    /* هر سلول از حالت راست‌چین به چپ‌چین ساده تبدیل می‌شود،
+       چه data-label داشته باشد چه نداشته باشد */
     td {
         border-bottom: none;
         padding: 8px 0;
         font-size: 14px;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
+        text-align: left;
+        direction: ltr; /* برای درست دیده شدن تاریخ */
     }
 
+    /* اگر data-label روی td ست شده باشد نمایش داده می‌شود،
+       اگر نباشد چیزی اضافه نمی‌شود و مشکلی پیش نمی‌آید */
     td::before {
         content: attr(data-label);
         font-weight: 500;
@@ -330,12 +344,22 @@ input[type="submit"]:active {
         flex-shrink: 0;
     }
 
+    td:empty::before {
+        content: none;
+    }
+
+    /* سلول آخر (دکمه‌های Delete/Update) افقی و منظم */
     td:last-child {
         margin-top: 8px;
         padding-top: 12px;
         border-top: 1px solid rgba(255, 255, 255, 0.05);
+        flex-direction: row;
         justify-content: flex-start;
-        gap: 16px; /* فاصله مناسب بین متون دکمه‌ها در حالت موبایل */
+        gap: 16px;
+    }
+
+    td:last-child a {
+        margin-right: 0 !important;
     }
 }
 
