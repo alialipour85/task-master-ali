@@ -10,6 +10,7 @@
 html {
     width: 100%;
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
 }
 
 /* ===== 🧊 Apple Liquid Glass Background ===== */
@@ -24,12 +25,20 @@ body {
     padding: 24px;
     overflow-x: hidden;
     position: relative;
+    /* جلوگیری از پرش/رفتار عجیب اسکرول در موبایل (pull-to-refresh و bounce) */
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* امواج مایع و متحرک پشت شیشه */
+/* امواج مایع و متحرک پشت شیشه
+   نکته مهم: position: fixed به‌جای absolute استفاده شده.
+   دلیل: absolute باعث می‌شد این عناصر به ارتفاع قابل‌اسکرول صفحه
+   اضافه بشن (چون خارج از باکس body می‌رفتن ولی overflow-y مخفی نبود)
+   و همین باعث اسکرول عجیب/رندوم در موبایل می‌شد. fixed این مشکل رو
+   کاملاً حذف می‌کنه چون این عناصر دیگه بخشی از جریان اسکرول نیستن. */
 body::before, body::after {
     content: "";
-    position: absolute;
+    position: fixed;
     width: 500px;
     height: 500px;
     border-radius: 50%;
@@ -38,6 +47,7 @@ body::before, body::after {
     opacity: 0.45;
     z-index: 0;
     pointer-events: none;
+    will-change: transform;
 }
 
 /* مایع نئونی اول (آبی-بنفش) */
@@ -259,12 +269,14 @@ input[type="submit"]:active {
         align-items: flex-start;
     }
 
-    /* دایره‌های نئونی رو کوچیک‌تر می‌کنیم که باعث اسکرول افقی نشن */
+    /* دایره‌های نئونی رو کوچیک‌تر و انیمیشن رو کندتر می‌کنیم
+       تا فشار کمتری روی GPU گوشی بیاد و اسکرول سبک‌تر بشه */
     body::before, body::after {
         width: 260px;
         height: 260px;
-        filter: blur(50px);
-        opacity: 0.35;
+        filter: blur(40px);
+        opacity: 0.3;
+        animation-duration: 25s; /* کندتر = مصرف منابع کمتر حین اسکرول */
     }
 
     .content {
