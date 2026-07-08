@@ -7,6 +7,24 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+h4 {
+
+    color: white;
+
+    transition: transform 0.3s ease;
+
+    display: inline-block; /* برای اینکه transform درست اعمال شود */
+
+}
+
+
+
+h4:hover {
+
+    transform: scale(1.08);
+
+}
+
 html {
     width: 100%;
     overflow-x: hidden;
